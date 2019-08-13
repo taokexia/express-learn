@@ -7,7 +7,7 @@ module.exports = (server) => {
 
   io.on("connection", function(socket) { 
     //监听用户发布聊天内容
-    io.on("message", function(obj) {
+    socket.on("message", function(obj) {
       //向所有客户端广播发布的消息
       var mess = {
         username: obj.username,

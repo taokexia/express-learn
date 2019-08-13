@@ -2,7 +2,7 @@ const express = require('express');
 const multiparty = require('multiparty');
 const router = express.Router();
 
-router.post('uploadimg', function (req, res, next) { // 上传图像
+router.post('/uploadimg', function (req, res, next) { // 上传图像
   //生成multiparty对象，并配置上传目标路径
   var form = new multiparty.Form();
   //设置编辑

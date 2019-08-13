@@ -5,6 +5,7 @@ var logger = require('morgan'); // 日志文件
 var mongoose = require("mongoose"); // 引入数据库
 var cookieParser = require('cookie-parser'); // session存储
 var session = require('cookie-session');
+// var cors = require('cors'); // 跨域设置
 var routes = require('./routes') // 路由
 
 const config = require('config-lite')(__dirname) // 配置文件
@@ -14,6 +15,23 @@ mongoose.Promise = require('bluebird');
 global.db = mongoose.connect("mongodb://localhost:27017/chat");
 
 var app = express();
+
+app.all('*', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With, yourHeaderFeild, Connection, Date, ETag'); 
+  res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
+  res.header("Access-Control-Allow-Credentials", true);
+  res.header("X-Powered-By", ' 3.2.1')
+      //这段仅仅为了方便返回json而已
+  res.header("Content-Type", "application/json;charset=utf-8");
+  if(req.method == 'OPTIONS') {
+      //让options请求快速返回
+      res.sendStatus(200); 
+  } else { 
+      next(); 
+  }
+});
+// app.use(cors());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
